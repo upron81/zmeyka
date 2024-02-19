@@ -13,6 +13,7 @@ function getRandomInt(min, max) {
 }
 
 function main() {
+  alert("Developed by Pronuza");
   const ctx = configurationCanvas();
   const blockSize = 80;
   const height = (window.innerHeight - (window.innerHeight % blockSize)) / blockSize;
