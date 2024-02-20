@@ -9,7 +9,7 @@ function configurationCanvas() {
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; // Округление до ближайшего целого числа
+    return Math.floor(Math.random() * (max - min)) + min; // Округление до ближайшего целого числа
 }
 
 function main() {
@@ -41,7 +41,6 @@ function main() {
     for (let block of snake.body) {
       dashBoard[block[0]][block[1]].color = "black"
     }
-    console.log(apple)
     dashBoard[apple.position[0]][apple.position[1]].color = "green"
   }
 
