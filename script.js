@@ -12,10 +12,18 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min; // Округление до ближайшего целого числа
 }
 
+
+function prelude() {
+
+
+  const dialog = document.getElementById("dialog");
+  dialog.style.display = "none"
+}
+
 function main() {
-  alert("Developed by Pronuza");
+  prelude();
   const ctx = configurationCanvas();
-  const blockSize = 80;
+  const blockSize = 100;
   const height = (window.innerHeight - (window.innerHeight % blockSize)) / blockSize;
   const width = (window.innerWidth - (window.innerWidth % blockSize)) / blockSize;
   
@@ -29,8 +37,8 @@ function main() {
     }
   }
 
-  dashBoard[1][1].color = "black"
-  dashBoard[3][5].color = "black"
+  dashBoard[1][1].color = "green"
+  dashBoard[3][5].color = "green"
 
   function updateDashBoard() {
     for (let line in dashBoard) {
@@ -39,9 +47,9 @@ function main() {
       }
     }
     for (let block of snake.body) {
-      dashBoard[block[0]][block[1]].color = "black"
+      dashBoard[block[0]][block[1]].color = "green"
     }
-    dashBoard[apple.position[0]][apple.position[1]].color = "green"
+    dashBoard[apple.position[0]][apple.position[1]].color = "red"
   }
 
   function drawDashBoard() {
@@ -49,11 +57,11 @@ function main() {
       for (let block in dashBoard[line]) {
         if (dashBoard[line][block].color == "white") {
           ctx.clearRect(block*blockSize, line*blockSize, blockSize, blockSize);
-        } else if (dashBoard[line][block].color == "black") {
-          ctx.fillStyle = "black";
-          ctx.fillRect(block*blockSize, line*blockSize, blockSize, blockSize);
         } else if (dashBoard[line][block].color == "green") {
           ctx.fillStyle = "green";
+          ctx.fillRect(block*blockSize, line*blockSize, blockSize, blockSize);
+        } else if (dashBoard[line][block].color == "red") {
+          ctx.fillStyle = "red";
           ctx.fillRect(block*blockSize, line*blockSize, blockSize, blockSize);
         }
       }
@@ -88,9 +96,6 @@ function main() {
     }
   }
 
-  function lose() {
-    alert("Вы проиграли");
-  }
 
   function nextBlockForDiration() {
     switch(snake.direction) {
@@ -124,7 +129,7 @@ function main() {
     if (nextBlock.toString() == apple.position.toString()) {
       randomApple();
       snake.length++;
-      timeInterval *= 0.95
+      timeInterval *= 0.9
       clearInterval(stepController)
       stepController = setInterval(step, timeInterval)
     } else {
@@ -156,7 +161,7 @@ function main() {
     }
   })
 
-  let timeInterval = 250
+  let timeInterval = 150
   let stepController = setInterval(step, timeInterval);
 }
 
