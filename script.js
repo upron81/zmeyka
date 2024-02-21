@@ -186,6 +186,7 @@ function game() {
     if (nextBlock.toString() == apple.position.toString()) {
       randomApple();
       appleCount++;
+      document.getElementById('score').textContent = appleCount.toString()
       snake.length++;
       timeInterval *= 0.97
       clearInterval(stepController)
