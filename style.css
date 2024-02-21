@@ -1,7 +1,3 @@
-body{
-  background-color: black;
-}
-
 #canvas {
   position: absolute;
   top: 0;
@@ -10,25 +6,26 @@ body{
   height: 100%;
   background: #000;
 }
-
 #dialog {
   z-index: 5;
-  display: flex;
   width: 50%;
   height: 50%;
   position: absolute;
   top: 25%;
   left: 25%;
   background-color: white;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
 }
-
 #title {
   font-size: x-large;
 }
-
+#text {
+  width: 50%;
+}
 #input {
   width: 50%;
+  display: none;
 }

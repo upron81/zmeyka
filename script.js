@@ -1,3 +1,6 @@
+let appleCount = 0;
+let isLose = false;
+
 function configurationCanvas() {
   const canvas = document.getElementById("canvas");
   const context = canvas.getContext("2d");
@@ -13,17 +16,71 @@ function getRandomInt(min, max) {
 }
 
 
-function prelude() {
-
-
+async function main() {
   const dialog = document.getElementById("dialog");
-  dialog.style.display = "none"
+  const button = document.getElementById("button")
+  const title = document.getElementById("title")
+  const text = document.getElementById("text")
+  const input = document.getElementById("input")
+
+  function waitEndPrelude() {
+    return new Promise(resolve => {
+      if (localStorage.getItem('user_name') === null) {
+        dialog.style.display = "flex"
+        button.addEventListener('click', () => {
+          button.removeEventListener('click', this)
+          title.textContent = "Как вас зовут";
+          text.style.display = "none"
+          input.style.display = "block"
+          localStorage.setItem("user_name", input.value)
+          button.addEventListener('click', () => {
+            button.removeEventListener('click', this)
+            input.style.display = "none"
+            title.textContent = "Правила игры"
+            text.style.display = "block"
+            text.textContent = "Привет, " + localStorage.getItem("user_name") + ". Вы должны управлять змеей на клавиши WASD. Врезание в стену или в самого себя защитывается за поражение. Удачи"
+            button.addEventListener('click', () => {
+              button.removeEventListener('click', this)
+              dialog.style.display = "none"
+              localStorage.setItem("apple", "0")
+              resolve()
+            })
+          })
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
+  waitEndPrelude().then(game);
 }
 
-function main() {
-  prelude();
+function lose() {
+  if (isLose === false) {
+    isLose = true;
+    const dialog = document.getElementById("dialog");
+    const button = document.getElementById("button")
+    const title = document.getElementById("title")
+    const text = document.getElementById("text")
+    const input = document.getElementById("input")
+    if (appleCount > parseInt(localStorage.getItem('apple'))) {
+      localStorage.setItem('apple', appleCount.toString())
+    }
+    dialog.style.display = "flex"
+    title.textContent = "Вы проиграли"
+    text.textContent = "Счёт: " + appleCount.toString() + ". Лучший счёт у " + localStorage.getItem("user_name") + ": " + localStorage.getItem('apple')
+    button.textContent = "Начать заново"
+    button.addEventListener('click', () => {
+      button.removeEventListener('click', this)
+      dialog.style.display = "none"
+      location.reload()
+    })
+  }
+}
+
+function game() {
   const ctx = configurationCanvas();
-  const blockSize = 100;
+  const blockSize = 70;
   const height = (window.innerHeight - (window.innerHeight % blockSize)) / blockSize;
   const width = (window.innerWidth - (window.innerWidth % blockSize)) / blockSize;
   
@@ -128,8 +185,9 @@ function main() {
 
     if (nextBlock.toString() == apple.position.toString()) {
       randomApple();
+      appleCount++;
       snake.length++;
-      timeInterval *= 0.9
+      timeInterval *= 0.97
       clearInterval(stepController)
       stepController = setInterval(step, timeInterval)
     } else {
@@ -161,8 +219,9 @@ function main() {
     }
   })
 
-  let timeInterval = 150
+  let timeInterval = 120
   let stepController = setInterval(step, timeInterval);
 }
+
 
 main();
