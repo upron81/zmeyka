@@ -218,6 +218,9 @@ function game() {
         snake.direction = 3
         break;
     }
+    clearInterval(stepController)
+    step()
+    stepController = setInterval(step, timeInterval)
   })
 
   let timeInterval = 120
