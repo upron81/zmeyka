@@ -219,8 +219,8 @@ function game() {
         break;
     }
     clearInterval(stepController)
-    step()
     stepController = setInterval(step, timeInterval)
+    step()
   })
 
   let timeInterval = 120
