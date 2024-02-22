@@ -188,7 +188,7 @@ function game() {
       appleCount++;
       document.getElementById('score').textContent = appleCount.toString()
       snake.length++;
-      timeInterval *= 0.97
+      timeInterval *= 0.98
       clearInterval(stepController)
       stepController = setInterval(step, timeInterval)
     } else {
