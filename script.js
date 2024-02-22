@@ -15,6 +15,9 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min; // Округление до ближайшего целого числа
 }
 
+function iWantContinue() {
+  document.getElementById('dialog').style.display = 'none'
+}
 
 async function main() {
   const dialog = document.getElementById("dialog");
